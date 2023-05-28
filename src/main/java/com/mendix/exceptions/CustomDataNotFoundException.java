@@ -1,6 +1,6 @@
 package com.mendix.exceptions;
 
-public class CustomDataNotFoundException extends Exception {
+public class CustomDataNotFoundException extends RuntimeException {
 
     public CustomDataNotFoundException(String message) {
         super(message);

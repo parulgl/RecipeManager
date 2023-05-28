@@ -1,16 +1,20 @@
 package com.mendix.db;
 
+import com.mendix.constants.Constants;
 import com.mendix.exceptions.CustomBadDataException;
 import com.mendix.exceptions.CustomDataNotFoundException;
 import com.mendix.models.Recipe;
 import com.mendix.models.RecipeCategory;
+import com.mendix.util.DaoHelper;
 import com.mendix.util.DataValidator;
 import jakarta.inject.Inject;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * Within the scope of this implementation, making use of InMemory
+ */
 public class RecipeDaoInMemoryImpl implements RecipeDao {
 
     private long lastRecipeId;
@@ -28,14 +32,14 @@ public class RecipeDaoInMemoryImpl implements RecipeDao {
     public List<Recipe> getAllRecipes() throws CustomDataNotFoundException {
 
         if (this.recipes.isEmpty()) {
-            throw new CustomDataNotFoundException("No recipe found");
+            throw new CustomDataNotFoundException(Constants.RECIPE_NOT_FOUND);
         }
         return this.recipes;
     }
 
     public List<Recipe> getRecipesByCategory(RecipeCategory category) throws CustomDataNotFoundException {
         if (!categoryToRecipeMap.containsKey(category)) {
-            throw new CustomDataNotFoundException("No recipe found for this category");
+            throw new CustomDataNotFoundException(Constants.RECIPE_NOT_FOUND);
         } else {
             return categoryToRecipeMap.get(category);
         }
@@ -45,7 +49,7 @@ public class RecipeDaoInMemoryImpl implements RecipeDao {
     public List<Recipe> getRecipesBySearchCriteria(String searchKey) throws CustomDataNotFoundException {
         List<Recipe> recipeList = recipes.stream().filter(x -> DaoHelper.search(x, searchKey) != null).collect(Collectors.toList());
         if (recipeList.isEmpty()) {
-            throw new CustomDataNotFoundException("No recipe found for this search word");
+            throw new CustomDataNotFoundException(Constants.RECIPE_NOT_FOUND);
         }
         return recipeList;
     }
@@ -53,12 +57,7 @@ public class RecipeDaoInMemoryImpl implements RecipeDao {
     @Override
     public long addRecipe(Recipe recipe) throws CustomBadDataException {
 
-        if (!dataValidator.uniqueTitleCheck(recipes, recipe)) {
-            throw new CustomBadDataException("Title already exists");
-        }
-        if (!dataValidator.validParamCheck(recipe)) {
-            throw new CustomBadDataException("Invalid parameters");
-        }
+        dataValidator.uniqueTitleCheck(recipes, recipe);
         recipe.setId(++lastRecipeId);
         recipes.add(recipe);
 
@@ -79,7 +78,7 @@ public class RecipeDaoInMemoryImpl implements RecipeDao {
     public Set<RecipeCategory> getAllCategories() throws CustomDataNotFoundException {
         Set<RecipeCategory> categories = categoryToRecipeMap.keySet();
         if (categories.isEmpty())  {
-            throw new CustomDataNotFoundException("No category found");
+            throw new CustomDataNotFoundException(Constants.CATEGORY_NOT_FOUND);
         }
         return categories;
     }

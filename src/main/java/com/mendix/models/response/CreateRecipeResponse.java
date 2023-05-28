@@ -6,10 +6,12 @@ import com.mendix.models.Ingredient;
 import com.mendix.models.RecipeCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.List;
 
 @Builder
+@Getter
 @AllArgsConstructor
 public class CreateRecipeResponse {
 

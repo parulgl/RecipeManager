@@ -7,6 +7,9 @@ import com.mendix.models.RecipeCategory;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Current implementation can be scaled to use persistent database.
+ */
 public class RecipeDaoPersistentImpl implements RecipeDao {
     @Override
     public List<Recipe> getAllRecipes() {

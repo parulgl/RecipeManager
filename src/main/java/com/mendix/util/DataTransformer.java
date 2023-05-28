@@ -1,4 +1,4 @@
-package com.mendix.Service;
+package com.mendix.util;
 
 import com.mendix.models.Recipe;
 import com.mendix.models.request.CreateRecipeRequest;

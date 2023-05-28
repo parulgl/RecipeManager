@@ -1,6 +1,7 @@
 package com.mendix.exceptions;
 
-public class CustomBadDataException extends Exception {
+
+public class CustomBadDataException extends RuntimeException {
 
     public CustomBadDataException(String message) {
         super(message);
