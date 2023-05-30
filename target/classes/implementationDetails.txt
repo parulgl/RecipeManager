@@ -1,0 +1,12 @@
+Implementation Details
+
+- Java part of this assignment has been successfully implemented.
+- Due to time constraints, could not implement the Mendix portion.
+- Current implementation has been done by storing the data in memory, mysql or postgresql could also be used as
+    persistent database here.
+- The APIs created :
+    getAllRecipes
+    getRecipesByCategory
+    getRecipesBySearchCriteria
+    addRecipe
+    getAllCategories
